@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>I Love You In Every Language | Multilingual Heart</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Interactive Stardust & Twinkling Celestial Canvas -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- Ambient Pulsing Heart Aura -->
+  <div class="heart-aura-glow"></div>
+
+  <!-- Discreet Corner Sound Toggle -->
+  <button class="sound-toggle-btn" id="sound-toggle-btn" title="Toggle gentle ambient melody">
+    <span id="sound-icon">🔈</span>
+  </button>
+
+  <!-- Main Web Application -->
+  <div class="app-container">
+    
+    <!-- Header Section -->
+    <header class="header-section">
+      <!-- Customizable Recipient Badge -->
+      <div class="dedication-badge" id="dedication-badge" title="Click to personalize name">
+        <span class="to-label">For</span>
+        <span class="recipient-name" id="recipient-name">My Love</span>
+        <span class="edit-icon">✏️</span>
+      </div>
+    </header>
+
+    <!-- 3D Heart Stage -->
+    <main class="heart-stage-wrapper">
+      <div class="heart-grid" id="heart-grid">
+        <!-- Rendered with mathematical precision by script.js -->
+      </div>
+    </main>
+
+  </div>
+
+  <!-- Interactive Hover & Pronunciation Popover Card -->
+  <div class="word-popover" id="word-popover">
+    <div class="popover-flag" id="popover-flag">✨</div>
+    <div class="popover-lang" id="popover-lang">Language</div>
+    <div class="popover-phrase" id="popover-phrase">I love you</div>
+    <div class="popover-phon" id="popover-phon">Pronunciation</div>
+    <div class="popover-hint">Click word to listen • 💖</div>
+  </div>
+
+  <!-- Modal: Personalize Name -->
+  <div class="modal-overlay" id="name-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2 class="modal-title">💌 Personalize Dedication</h2>
+        <button class="modal-close">&times;</button>
+      </div>
+      <div class="input-group">
+        <label class="input-label" for="name-input">Who is this heart dedicated to?</label>
+        <input type="text" id="name-input" class="name-input" placeholder="e.g. My Darling, Sarah, Sweetheart" maxlength="32">
+      </div>
+      <button class="save-btn" id="save-name-btn">Save Dedication ✨</button>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="languages.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

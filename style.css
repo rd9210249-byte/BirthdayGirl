@@ -1,0 +1,616 @@
+/* Modern Aesthetic Heart Web App Styling */
+:root {
+  --bg-color: #040105;
+  --bg-gradient: radial-gradient(circle at 50% 48%, #20040e 0%, #0d0207 45%, #040105 100%);
+  --text-primary: #ff3344;
+  --text-secondary: #ff6078;
+  --text-glow: rgba(255, 35, 65, 0.65);
+  --text-glow-intense: rgba(255, 60, 95, 0.95);
+  --accent-gold: #ffc078;
+  --heart-aura: radial-gradient(circle, rgba(255, 20, 60, 0.22) 0%, rgba(180, 10, 40, 0.06) 55%, transparent 75%);
+  --card-bg: rgba(22, 6, 12, 0.88);
+  --card-border: rgba(255, 55, 85, 0.3);
+  --font-display: 'Cinzel', 'Playfair Display', serif;
+  --font-body: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans", sans-serif;
+  --heart-max-width: 860px;
+}
+
+/* Base Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background-color: var(--bg-color);
+  background-image: var(--bg-gradient);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  user-select: none;
+  touch-action: pan-y;
+}
+
+/* Background Ambient Canvas */
+#bg-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Ambient Heart Glow Backdrop */
+.heart-aura-glow {
+  position: fixed;
+  top: 52%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(850px, 92vw);
+  height: min(850px, 92vw);
+  background: var(--heart-aura);
+  border-radius: 50%;
+  filter: blur(50px);
+  z-index: 1;
+  pointer-events: none;
+  animation: auraPulse 4s ease-in-out infinite alternate;
+}
+
+@keyframes auraPulse {
+  0%   { transform: translate(-50%, -50%) scale(0.92); opacity: 0.65; }
+  100% { transform: translate(-50%, -50%) scale(1.08); opacity: 1; }
+}
+
+/* App Container */
+.app-container {
+  position: relative;
+  z-index: 2;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 16px 12px 30px;
+}
+
+/* Discreet Audio Control Button (Top Right Corner) */
+.sound-toggle-btn {
+  position: fixed;
+  top: 20px;
+  right: 22px;
+  z-index: 100;
+  background: rgba(25, 8, 15, 0.6);
+  border: 1px solid rgba(255, 50, 80, 0.25);
+  color: #fff;
+  font-size: 1.15rem;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  opacity: 0.75;
+  transition: all 0.3s ease;
+}
+
+.sound-toggle-btn:hover {
+  opacity: 1;
+  transform: scale(1.1);
+  border-color: var(--text-primary);
+  box-shadow: 0 0 15px var(--text-glow);
+}
+
+/* Header & Dedication */
+.header-section {
+  text-align: center;
+  margin-bottom: 12px;
+  max-width: 800px;
+  animation: fadeInDown 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dedication-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 18px;
+  border-radius: 999px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  backdrop-filter: blur(12px);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.dedication-badge:hover {
+  transform: translateY(-2px);
+  border-color: var(--text-primary);
+  box-shadow: 0 4px 20px var(--text-glow);
+}
+
+.dedication-badge span.to-label {
+  font-size: 0.76rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  opacity: 0.8;
+}
+
+.dedication-badge span.recipient-name {
+  font-family: var(--font-display);
+  font-size: 0.98rem;
+  font-weight: 600;
+  color: #fff;
+  text-shadow: 0 0 10px var(--text-glow);
+}
+
+.edit-icon {
+  font-size: 0.75rem;
+  opacity: 0.6;
+}
+
+/* =======================================================
+   PERFECT MATHEMATICAL HEART CONTAINER & GRID
+   ======================================================= */
+.heart-stage-wrapper {
+  perspective: 1400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 6px auto;
+  width: 100%;
+  max-width: var(--heart-max-width);
+}
+
+.heart-grid {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transform-style: preserve-3d;
+  transition: transform 0.3s cubic-bezier(0.1, 0.9, 0.2, 1);
+  animation: heartBreathe 4.2s ease-in-out infinite;
+  will-change: transform;
+  gap: clamp(1px, 0.38vh, 3.5px);
+  padding: 4px 8px;
+}
+
+@keyframes heartBreathe {
+  0%   { transform: scale(1); }
+  20%  { transform: scale(1.02); }
+  35%  { transform: scale(1); }
+  50%  { transform: scale(1.012); }
+  65%  { transform: scale(1); }
+  100% { transform: scale(1); }
+}
+
+/* Row Geometry with Exact Boundaries */
+.heart-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  width: var(--row-width, 100%);
+  max-width: var(--row-width, 100%);
+  line-height: 1.15;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+/* Split Rows for Upper Lobes */
+.heart-row.split-row {
+  justify-content: center;
+  gap: var(--cleft-gap, 20%);
+}
+
+.lobe-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: clamp(3px, 0.9vw, 10px);
+  white-space: nowrap;
+}
+
+.lobe-left {
+  justify-content: flex-end;
+}
+
+.lobe-right {
+  justify-content: flex-start;
+}
+
+/* Merged Single Rows for Heart Chest & Lower Apex */
+.heart-row.single-row {
+  justify-content: center;
+  gap: clamp(3px, 0.8vw, 10px);
+  white-space: nowrap;
+}
+
+/* =======================================================
+   LANGUAGE BADGE ITEMS (GLOWING RUBY TEXT WITH ANIMATION)
+   ======================================================= */
+.love-item {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: clamp(0.66rem, 1.08vw, 0.88rem); /* Enlarged as requested */
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  padding: 1.5px 3.5px;
+  border-radius: 4px;
+  white-space: nowrap;
+  flex-shrink: 1;
+  transition: all 0.35s cubic-bezier(0.2, 0.8, 0.3, 1);
+  text-shadow: 0 0 8px var(--text-glow), 0 0 16px var(--text-glow);
+  transform: translateZ(0);
+  animation: textEmberPulse 4.2s ease-in-out infinite;
+  animation-delay: var(--stagger-delay, 0s);
+}
+
+/* Continuous Ambient Text Shimmer Wave */
+@keyframes textEmberPulse {
+  0%, 100% {
+    color: var(--text-primary);
+    text-shadow: 0 0 7px var(--text-glow), 0 0 14px var(--text-glow);
+    transform: scale(1);
+    opacity: 0.92;
+  }
+  50% {
+    color: #ff5274;
+    text-shadow: 0 0 12px var(--text-glow-intense), 0 0 24px var(--text-glow), 0 0 35px rgba(255, 80, 115, 0.5);
+    transform: scale(1.025);
+    opacity: 1;
+  }
+}
+
+.love-item:hover {
+  color: #ffffff;
+  transform: scale(1.24) translateZ(30px);
+  text-shadow: 0 0 12px #fff, 0 0 26px var(--text-glow-intense), 0 0 48px var(--text-glow);
+  z-index: 100;
+  animation-play-state: paused;
+}
+
+/* Highlight Wave Effect */
+.love-item.highlight-wave {
+  color: #ffffff !important;
+  text-shadow: 0 0 14px #ffffff, 0 0 28px var(--accent-gold), 0 0 50px var(--text-glow-intense) !important;
+  transform: scale(1.14) translateZ(14px);
+}
+
+/* Silky Smooth Luminous Dissolve & Crossfade Morphing */
+.love-item.morphing {
+  animation: smoothMorph 1.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+@keyframes smoothMorph {
+  0% {
+    opacity: 1;
+    filter: blur(0px);
+    transform: scale(1);
+    text-shadow: 0 0 7px var(--text-glow), 0 0 14px var(--text-glow);
+  }
+  30% {
+    opacity: 0.15;
+    filter: blur(2px);
+    transform: scale(0.94);
+    text-shadow: 0 0 20px var(--text-glow-intense);
+  }
+  65% {
+    opacity: 0.2;
+    filter: blur(1.5px);
+    transform: scale(0.96);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0px);
+    transform: scale(1);
+    text-shadow: 0 0 10px #ffffff, 0 0 22px var(--text-glow-intense), 0 0 38px var(--text-glow);
+  }
+}
+
+/* =======================================================
+   INTERACTIVE WORD POPOVER CARD
+   ======================================================= */
+.word-popover {
+  position: fixed;
+  z-index: 1000;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, -100%) scale(0.9);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  padding: 12px 18px;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.85), 0 0 20px var(--text-glow);
+  color: #fff;
+  text-align: center;
+  min-width: 180px;
+}
+
+.word-popover.visible {
+  opacity: 1;
+  transform: translate(-50%, calc(-100% - 15px)) scale(1);
+}
+
+.popover-flag {
+  font-size: 1.8rem;
+  margin-bottom: 2px;
+}
+
+.popover-lang {
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.popover-phrase {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 2px 0;
+  text-shadow: 0 0 10px var(--text-glow);
+}
+
+.popover-phon {
+  font-size: 0.8rem;
+  font-style: italic;
+  opacity: 0.85;
+  color: var(--accent-gold);
+}
+
+.popover-hint {
+  font-size: 0.68rem;
+  opacity: 0.55;
+  margin-top: 6px;
+}
+
+/* =======================================================
+   PERSONALIZATION MODAL
+   ======================================================= */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(12px);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 24px;
+  padding: 28px;
+  max-width: 480px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9), 0 0 30px var(--text-glow);
+  transform: translateY(20px) scale(0.95);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  color: #fff;
+}
+
+.modal-overlay.active .modal-card {
+  transform: translateY(0) scale(1);
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 14px;
+}
+
+.modal-title {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  color: #fff;
+  text-shadow: 0 0 10px var(--text-glow);
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.5rem;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.modal-close:hover {
+  opacity: 1;
+}
+
+.input-group {
+  margin-bottom: 20px;
+}
+
+.input-label {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.name-input {
+  width: 100%;
+  padding: 14px 18px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  outline: none;
+}
+
+.name-input:focus {
+  border-color: var(--text-primary);
+  box-shadow: 0 0 15px var(--text-glow);
+}
+
+.save-btn {
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  background: var(--text-primary);
+  color: #fff;
+  border: none;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 4px 20px var(--text-glow);
+}
+
+.save-btn:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.15);
+}
+
+/* Floating Heart Spawn Particles */
+.floating-heart-burst {
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  font-size: 1.5rem;
+  animation: floatUpBurst 1.6s cubic-bezier(0.2, 0.8, 0.3, 1) forwards;
+}
+
+@keyframes floatUpBurst {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(0.5);
+  }
+  50% {
+    opacity: 0.9;
+    transform: translate(calc(-50% + var(--dx, 0px)), calc(-50% - 70px)) scale(1.3) rotate(var(--rot, 0deg));
+  }
+  100% {
+    opacity: 0;
+    transform: translate(calc(-50% + var(--dx, 0px)), calc(-50% - 150px)) scale(1) rotate(var(--rot, 0deg));
+  }
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive adjustments for Tablets & Mobile */
+@media (max-width: 768px) {
+  :root {
+    --heart-max-width: 100vw;
+  }
+  .app-container {
+    padding: 6px 4px 12px;
+    justify-content: center;
+  }
+  .header-section {
+    margin-bottom: 6px;
+  }
+  .dedication-badge {
+    padding: 4px 14px;
+    font-size: 0.85rem;
+  }
+  .sound-toggle-btn {
+    top: 10px;
+    right: 10px;
+    width: 32px;
+    height: 32px;
+    font-size: 0.9rem;
+  }
+  .heart-stage-wrapper {
+    margin: 2px auto;
+  }
+  .heart-grid {
+    gap: clamp(0.5px, 0.28vh, 2px);
+    padding: 2px;
+  }
+  .heart-row {
+    line-height: 1.1;
+  }
+  .heart-row.split-row {
+    gap: var(--cleft-gap-mobile, 16%);
+  }
+  .lobe-container {
+    gap: clamp(2px, 0.75vw, 6px);
+  }
+  .heart-row.single-row {
+    gap: clamp(2px, 0.7vw, 6px);
+  }
+  .love-item {
+    padding: 0.5px 2px;
+    font-size: clamp(0.52rem, 2.05vw, 0.72rem);
+    letter-spacing: 0.15px;
+  }
+}
+
+@media (max-width: 420px) {
+  /* Ultra-compact mobile screens (e.g. iPhone SE) */
+  .heart-row.split-row {
+    gap: var(--cleft-gap-mobile, 14%);
+  }
+  .lobe-container {
+    gap: 2px;
+  }
+  .heart-row.single-row {
+    gap: 2px;
+  }
+  .love-item {
+    padding: 0px 1.5px;
+    font-size: clamp(0.48rem, 2vw, 0.65rem);
+    letter-spacing: 0px;
+  }
+}
+
+@media (max-height: 670px) {
+  /* Compact height viewports */
+  .header-section {
+    margin-bottom: 3px;
+  }
+  .heart-grid {
+    gap: 0.5px;
+  }
+  .love-item {
+    font-size: clamp(0.46rem, 1.8vh, 0.68rem);
+    padding: 0px 1.5px;
+  }
+}
